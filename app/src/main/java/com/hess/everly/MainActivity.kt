@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         val usernameInput = findViewById<EditText>(R.id.usernameInput)
         val passwordInput = findViewById<EditText>(R.id.passwordInput)
         val loginButton = findViewById<Button>(R.id.loginButton)
+        val registerButton = findViewById<Button>(R.id.goToRegisterButton)
+
+        registerButton.setOnClickListener {
+            startActivity(android.content.Intent(this, com.hess.everly.ui.RegisterActivity::class.java))
+        }
 
         loginButton.setOnClickListener {
             val username = usernameInput.text.toString().trim()
@@ -59,7 +64,11 @@ class MainActivity : AppCompatActivity() {
                     val loginResponse = response.body()
                     if (loginResponse != null && loginResponse.success) {
                         Toast.makeText(this@MainActivity, "Login Successful! Cookie Saved.", Toast.LENGTH_LONG).show()
-                        // TODO: Navigate to Feed Activity
+                        
+                        // Navigate to Feed Activity
+                        val intent = android.content.Intent(this@MainActivity, com.hess.everly.ui.FeedActivity::class.java)
+                        startActivity(intent)
+                        finish() // Prevent going back to login screen with back button
                     } else {
                         val errMsg = loginResponse?.errorMessage ?: "Invalid credentials"
                         Toast.makeText(this@MainActivity, errMsg, Toast.LENGTH_LONG).show()

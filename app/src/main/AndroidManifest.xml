@@ -23,6 +23,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.FeedActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.MemoriesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MemoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CreateMemoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AutographsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.EventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.JournalsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.VaultActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
