@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/memoryCardRoot"
+    android:id="@+id/journalCardRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
@@ -16,48 +16,44 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/memoryImagePanel"
+        <View
+            android:id="@+id/journalHeader"
             android:layout_width="match_parent"
-            android:layout_height="128dp">
-
-            <TextView
-                android:id="@+id/memoryBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|start"
-                android:layout_margin="12dp"
-                android:background="@drawable/bg_stat_pill_light"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="6dp"
-                android:textColor="@color/everly_text_primary"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-        </FrameLayout>
+            android:layout_height="54dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="14dp">
 
             <TextView
-                android:id="@+id/memoryTitleTextView"
+                android:id="@+id/journalTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/everly_text_primary"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/memoryDateTextView"
+                android:id="@+id/journalSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/everly_text_secondary"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/journalBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textColor="@color/everly_text_primary"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

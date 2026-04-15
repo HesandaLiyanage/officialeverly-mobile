@@ -1,9 +1,49 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Everlymobile" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/everly_primary</item>
+        <item name="colorSecondary">@color/everly_primary</item>
+        <item name="android:statusBarColor">@color/everly_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/everly_background</item>
+        <item name="materialCardViewFilledStyle">@style/Widget.Material3.CardView.Elevated</item>
     </style>
 
     <style name="Theme.Everlymobile" parent="Base.Theme.Everlymobile" />
+
+    <style name="Widget.Everly.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/everly_surface</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="boxStrokeColor">@color/everly_border</item>
+        <item name="hintTextColor">@color/everly_text_secondary</item>
+    </style>
+
+    <style name="Widget.Everly.PrimaryButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/everly_primary</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Everly.SecondaryButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/everly_border</item>
+        <item name="android:textColor">@color/everly_text_primary</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <style name="Widget.Everly.FilterButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/everly_border</item>
+        <item name="backgroundTint">@color/everly_surface</item>
+        <item name="android:textColor">@color/everly_text_primary</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <style name="Widget.Everly.TabButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:checkable">true</item>
+        <item name="strokeColor">@color/everly_border</item>
+        <item name="backgroundTint">@color/everly_surface</item>
+        <item name="android:textColor">@color/everly_text_primary</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
 </resources>

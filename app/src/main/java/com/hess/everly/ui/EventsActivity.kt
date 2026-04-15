@@ -1,59 +1,83 @@
 package com.hess.everly.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.widget.doAfterTextChanged
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.hess.everly.R
-import com.hess.everly.network.ApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.hess.everly.data.EverlyLocalStore
+import com.hess.everly.data.OfflineEvent
+import com.hess.everly.util.DateUtils
 
 class EventsActivity : AppCompatActivity() {
 
+    private lateinit var store: EverlyLocalStore
+    private lateinit var adapter: EventsAdapter
+    private lateinit var searchInput: EditText
+    private lateinit var emptyState: TextView
+    private var allEvents: List<OfflineEvent> = emptyList()
+    private var showingUpcoming = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed) // Reusing feed layout
+        setContentView(R.layout.activity_events)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.eventsToolbar)
         toolbar.title = "Events"
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val recyclerView = findViewById<RecyclerView>(R.id.feedRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        
-        val adapter = EventsAdapter(emptyList())
+        store = EverlyLocalStore.get(this)
+        searchInput = findViewById(R.id.eventsSearchInput)
+        emptyState = findViewById(R.id.eventsEmptyState)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.eventsRecyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        adapter = EventsAdapter(emptyList()) { event ->
+            startActivity(Intent(this, EventDetailActivity::class.java).putExtra(EXTRA_EVENT_ID, event.id))
+        }
         recyclerView.adapter = adapter
 
-        GlobalScope.launch(Dispatchers.IO) {
-            try {
-                val response = ApiClient.apiService.getEvents()
-                if (response.isSuccessful && response.body() != null) {
-                    val eventsResponse = response.body()!!
-                    // Combine past and upcoming
-                    val allEvents = buildList {
-                        eventsResponse.upcoming?.let { addAll(it) }
-                        eventsResponse.past?.let { addAll(it) }
-                    }
-                    withContext(Dispatchers.Main) {
-                        adapter.updateData(allEvents)
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(this@EventsActivity, "Failed to load events", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(this@EventsActivity, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
+        findViewById<MaterialButton>(R.id.tabUpcoming).setOnClickListener {
+            showingUpcoming = true
+            render()
         }
+        findViewById<MaterialButton>(R.id.tabPast).setOnClickListener {
+            showingUpcoming = false
+            render()
+        }
+        searchInput.doAfterTextChanged { render() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        allEvents = store.getEvents()
+        render()
+    }
+
+    private fun render() {
+        val query = searchInput.text.toString().trim().lowercase()
+        val statusFiltered = allEvents.filter { DateUtils.isUpcoming(it.date) == showingUpcoming }
+        val filtered = statusFiltered.filter {
+            it.title.lowercase().contains(query) ||
+                it.description.lowercase().contains(query) ||
+                it.location.lowercase().contains(query)
+        }
+        adapter.updateData(filtered.sortedBy { it.date })
+        emptyState.visibility = if (filtered.isEmpty()) TextView.VISIBLE else TextView.GONE
+        findViewById<MaterialButton>(R.id.tabUpcoming).isChecked = showingUpcoming
+        findViewById<MaterialButton>(R.id.tabPast).isChecked = !showingUpcoming
+    }
+
+    companion object {
+        const val EXTRA_EVENT_ID = "event_id"
     }
 }
+

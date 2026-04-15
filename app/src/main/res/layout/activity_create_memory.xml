@@ -1,77 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:background="@color/everly_background"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/createToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:background="@color/everly_surface"
+        app:titleTextColor="@color/everly_text_primary" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="24dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Create New Memory"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"/>
-
-            <TextView android:text="Title:" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/createTitleInput"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="e.g. Hiking Trip"
-                android:layout_marginBottom="16dp"/>
+                app:cardBackgroundColor="@color/everly_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/everly_border"
+                app:strokeWidth="1dp">
 
-            <TextView android:text="Date:" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/createDateInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="YYYY-MM-DD"
-                android:layout_marginBottom="16dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <TextView android:text="Description:" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/createDescInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Optional description"
-                android:inputType="textMultiLine"
-                android:minLines="3"
-                android:gravity="top|start"
-                android:layout_marginBottom="16dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Create a memory"
+                        android:textColor="@color/everly_text_primary"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/selectFilesBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Select Files"
-                android:backgroundTint="#FF9800"
-                android:layout_marginBottom="32dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="This version stores the memory directly inside the app, so there is no server upload step."
+                        android:textColor="@color/everly_text_secondary"
+                        android:textSize="13sp" />
 
-            <Button
-                android:id="@+id/submitMemoryBtn"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Save Memory" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Everly.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:hint="Memory title">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createTitleInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textCapSentences" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Everly.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:hint="Date (YYYY-MM-DD)">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createDateInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="date" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Everly.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:hint="Description">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/createDescriptionInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:gravity="top"
+                            android:inputType="textMultiLine"
+                            android:minLines="4" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/submitMemoryBtn"
+                        style="@style/Widget.Everly.PrimaryButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Save Memory" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+

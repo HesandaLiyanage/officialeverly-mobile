@@ -2,10 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -36,6 +33,15 @@
             android:name=".ui.MemoryDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.JournalDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AutographDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.EventDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CreateMemoryActivity"
             android:exported="false" />
         <activity
@@ -46,9 +52,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.JournalsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.VaultActivity"
             android:exported="false" />
 
     </application>

@@ -6,40 +6,40 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.hess.everly.R
+import com.hess.everly.data.EverlyLocalStore
+import com.hess.everly.util.DateUtils
+import com.hess.everly.util.toColorInt
 
 class MemoryDetailActivity : AppCompatActivity() {
-
-    private lateinit var mediaAdapter: MediaAdapter
-    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_memory_detail)
 
         val toolbar = findViewById<Toolbar>(R.id.detailToolbar)
-        toolbar.title = "Memory Details"
+        toolbar.title = "Memory"
         setSupportActionBar(toolbar)
-        // Enable back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        // Setup views (in a real app, read from Intent extras or fetch via ID)
-        val titleText = findViewById<TextView>(R.id.detailTitle)
-        val dateText = findViewById<TextView>(R.id.detailDate)
-        val descText = findViewById<TextView>(R.id.detailDesc)
-        
-        // Mock data
-        titleText.text = "Summer Trip 2026"
-        dateText.text = "2026-07-15"
-        descText.text = "We went to the beach and it was amazing."
+        val memoryId = intent.getIntExtra(MemoriesActivity.EXTRA_MEMORY_ID, -1)
+        val memory = EverlyLocalStore.get(this).getMemory(memoryId) ?: run {
+            finish()
+            return
+        }
 
-        // Setup image grid
-        recyclerView = findViewById(R.id.mediaGridRecyclerView)
-        recyclerView.layoutManager = GridLayoutManager(this, 3) // 3 columns for photos
-        
-        // Mock API load
-        mediaAdapter = MediaAdapter(listOf("url1", "url2", "url3", "url4", "url5"))
-        recyclerView.adapter = mediaAdapter
+        findViewById<MaterialCardView>(R.id.memoryHero).setCardBackgroundColor(memory.accentColor.toColorInt())
+        findViewById<TextView>(R.id.detailTitle).text = memory.title
+        findViewById<TextView>(R.id.detailDate).text = DateUtils.formatDisplayDate(memory.date)
+        findViewById<TextView>(R.id.detailDesc).text = memory.description
+        findViewById<TextView>(R.id.detailMeta).text =
+            if (memory.isPublic) "Public memory • ${memory.photos.size} moments" else "Private memory • ${memory.photos.size} moments"
+
+        val recyclerView = findViewById<RecyclerView>(R.id.mediaGridRecyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.adapter = MediaAdapter(memory.photos)
     }
 }
+

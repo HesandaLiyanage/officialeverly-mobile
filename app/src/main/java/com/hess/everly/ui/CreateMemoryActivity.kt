@@ -1,12 +1,14 @@
 package com.hess.everly.ui
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.button.MaterialButton
 import com.hess.everly.R
+import com.hess.everly.data.EverlyLocalStore
+import java.time.LocalDate
 
 class CreateMemoryActivity : AppCompatActivity() {
 
@@ -15,26 +17,30 @@ class CreateMemoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_memory)
 
         val toolbar = findViewById<Toolbar>(R.id.createToolbar)
-        toolbar.title = "Upload Memory"
+        toolbar.title = "Add Memory"
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val submitBtn = findViewById<Button>(R.id.submitMemoryBtn)
-        val fileBtn = findViewById<Button>(R.id.selectFilesBtn)
+        val titleInput = findViewById<EditText>(R.id.createTitleInput)
+        val descriptionInput = findViewById<EditText>(R.id.createDescriptionInput)
+        val dateInput = findViewById<EditText>(R.id.createDateInput)
+        dateInput.setText(LocalDate.now().toString())
 
-        fileBtn.setOnClickListener {
-            Toast.makeText(this, "Android native file picker would open here.", Toast.LENGTH_SHORT).show()
-        }
+        findViewById<MaterialButton>(R.id.submitMemoryBtn).setOnClickListener {
+            val title = titleInput.text.toString().trim()
+            val description = descriptionInput.text.toString().trim()
+            val date = dateInput.text.toString().trim()
 
-        submitBtn.setOnClickListener {
-            val title = findViewById<EditText>(R.id.createTitleInput).text.toString()
-            if (title.isEmpty()) {
-                Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show()
+            if (title.isBlank()) {
+                titleInput.error = "Title is required"
                 return@setOnClickListener
             }
-            Toast.makeText(this, "Ready to send multipart API request to backend!", Toast.LENGTH_LONG).show()
-            // Here you would use Retrofit @Multipart logic
+
+            EverlyLocalStore.get(this).addMemory(title, description, date)
+            Toast.makeText(this, "Memory saved on this device", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 }
+

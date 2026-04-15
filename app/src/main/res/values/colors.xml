@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="everly_background">#FAF7FB</color>
+    <color name="everly_surface">#FFFFFFFF</color>
+    <color name="everly_border">#E9E0F0</color>
+    <color name="everly_primary">#7A54C7</color>
+    <color name="everly_primary_light">#F2ECFF</color>
+    <color name="everly_text_primary">#1F2937</color>
+    <color name="everly_text_secondary">#6B7280</color>
 </resources>

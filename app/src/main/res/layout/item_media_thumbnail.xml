@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mediaThumbCard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    android:layout_height="120dp"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
 
-    <!-- Square aspect ratio by setting layout_height="0dp" and app:layout_constraintDimensionRatio="1:1" if using ConstraintLayout, but for simplicity here we use a fixed height grid -->
-    <ImageView
-        android:id="@+id/thumbnailImage"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:background="#DDDDDD" 
-        android:src="@drawable/ic_launcher_background" />
+    <TextView
+        android:id="@+id/thumbnailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_stat_pill_light"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:textColor="@color/everly_text_primary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+</com.google.android.material.card.MaterialCardView>
 
-</androidx.cardview.widget.CardView>

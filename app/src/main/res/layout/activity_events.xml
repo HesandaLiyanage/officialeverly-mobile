@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/memoriesToolbar"
+        android:id="@+id/eventsToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/everly_surface"
@@ -17,75 +17,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="12dp">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Everly.TextInputLayout"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tabUpcoming"
+                style="@style/Widget.Everly.TabButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Search memories">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/memoriesSearchInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:text="Upcoming" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/memoriesSortButton"
-                style="@style/Widget.Everly.FilterButton"
-                android:layout_width="wrap_content"
+                android:id="@+id/tabPast"
+                style="@style/Widget.Everly.TabButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Date ↓" />
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="Past Events" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/memoriesStatsText"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Everly.TextInputLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:textColor="@color/everly_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:hint="Search events">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/eventsSearchInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/memoriesRecyclerView"
+            android:id="@+id/eventsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingBottom="12dp" />
+            android:paddingBottom="16dp" />
 
         <TextView
-            android:id="@+id/memoriesEmptyState"
+            android:id="@+id/eventsEmptyState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="24dp"
-            android:text="No memories yet. Start creating your first memory."
+            android:text="No events in this section."
             android:textColor="@color/everly_text_secondary"
             android:visibility="gone" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCreateMemory"
-            style="@style/Widget.Everly.PrimaryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="Add Memory" />
     </LinearLayout>
 </LinearLayout>
 
