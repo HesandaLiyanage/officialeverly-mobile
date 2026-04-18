@@ -42,6 +42,15 @@
             android:name=".ui.EventDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.CreateJournalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CreateAutographActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.CreateEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CreateMemoryActivity"
             android:exported="false" />
         <activity

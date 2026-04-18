@@ -2,6 +2,7 @@ package com.hess.everly.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +49,9 @@ class JournalsActivity : AppCompatActivity() {
             sortDescending = !sortDescending
             render()
         }
+        findViewById<MaterialButton>(R.id.btnCreateJournal).setOnClickListener {
+            startActivity(Intent(this, CreateJournalActivity::class.java))
+        }
         searchInput.doAfterTextChanged { render() }
     }
 
@@ -64,7 +68,7 @@ class JournalsActivity : AppCompatActivity() {
             it.title.lowercase().contains(query) || it.content.lowercase().contains(query)
         }
         adapter.updateData(filtered)
-        emptyState.visibility = if (filtered.isEmpty()) TextView.VISIBLE else TextView.GONE
+        emptyState.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
         findViewById<MaterialButton>(R.id.journalsSortButton).text =
             if (sortDescending) "Sort: Date" else "Sort: Oldest"
     }
@@ -73,4 +77,3 @@ class JournalsActivity : AppCompatActivity() {
         const val EXTRA_JOURNAL_ID = "journal_id"
     }
 }
-

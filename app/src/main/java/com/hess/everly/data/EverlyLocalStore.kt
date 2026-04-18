@@ -45,17 +45,84 @@ class EverlyLocalStore private constructor(context: Context) {
     fun getJournal(journalId: Int): OfflineJournal? =
         getJournals().firstOrNull { it.id == journalId }
 
+    fun addJournal(title: String, content: String, createdAt: String) {
+        val journals = getJournals().toMutableList()
+        val nextId = (journals.maxOfOrNull { it.id } ?: 0) + 1
+        val palette = journalPalettes[nextId % journalPalettes.size]
+        journals.add(
+            0,
+            OfflineJournal(
+                id = nextId,
+                title = title,
+                content = content.ifBlank { "A quiet note captured on this device." },
+                createdAt = createdAt,
+                accentStartColor = palette.first,
+                accentEndColor = palette.second,
+                wordCount = content.trim().split(Regex("\\s+")).count { it.isNotBlank() }.coerceAtLeast(1)
+            )
+        )
+        writeList(KEY_JOURNALS, journals)
+    }
+
     fun getAutographs(): List<OfflineAutograph> =
         readList(KEY_AUTOGRAPHS, autographType, seedAutographs())
 
     fun getAutograph(autographId: Int): OfflineAutograph? =
         getAutographs().firstOrNull { it.id == autographId }
 
+    fun addAutograph(
+        title: String,
+        targetName: String,
+        description: String,
+        createdAt: String,
+        firstAuthor: String,
+        firstMessage: String
+    ) {
+        val autographs = getAutographs().toMutableList()
+        val nextId = (autographs.maxOfOrNull { it.id } ?: 0) + 1
+        autographs.add(
+            0,
+            OfflineAutograph(
+                id = nextId,
+                title = title,
+                targetName = targetName.ifBlank { "Someone special" },
+                description = description.ifBlank { "A new autograph book created on this device." },
+                createdAt = createdAt,
+                coverColor = autographPalette[nextId % autographPalette.size],
+                entries = listOf(
+                    AutographEntry(
+                        id = nextId * 100 + 1,
+                        authorName = firstAuthor.ifBlank { "You" },
+                        message = firstMessage.ifBlank { "The first page is ready for new memories." }
+                    )
+                )
+            )
+        )
+        writeList(KEY_AUTOGRAPHS, autographs)
+    }
+
     fun getEvents(): List<OfflineEvent> =
         readList(KEY_EVENTS, eventType, seedEvents())
 
     fun getEvent(eventId: Int): OfflineEvent? =
         getEvents().firstOrNull { it.id == eventId }
+
+    fun addEvent(title: String, description: String, date: String, location: String) {
+        val events = getEvents().toMutableList()
+        val nextId = (events.maxOfOrNull { it.id } ?: 0) + 1
+        events.add(
+            0,
+            OfflineEvent(
+                id = nextId,
+                title = title,
+                description = description.ifBlank { "An event planned directly from the Everly app." },
+                date = date,
+                location = location.ifBlank { "To be decided" },
+                accentColor = eventPalette[nextId % eventPalette.size]
+            )
+        )
+        writeList(KEY_EVENTS, events)
+    }
 
     private fun <T> readList(key: String, typeToken: java.lang.reflect.Type, seeds: List<T>): List<T> {
         val raw = prefs.getString(key, null)
@@ -209,6 +276,14 @@ class EverlyLocalStore private constructor(context: Context) {
         private val autographType = object : TypeToken<List<OfflineAutograph>>() {}.type
         private val eventType = object : TypeToken<List<OfflineEvent>>() {}.type
         private val memoryPalette = listOf("#EADFFF", "#DDEBFF", "#FFF0D8", "#E6F6EC")
+        private val autographPalette = listOf("#FEFCF3", "#FFF7ED", "#FFF8F1")
+        private val eventPalette = listOf("#C4B5FD", "#F9A8D4", "#93C5FD", "#FCD34D")
+        private val journalPalettes = listOf(
+            "#6F42C1" to "#9A74D8",
+            "#667EEA" to "#764BA2",
+            "#F093FB" to "#F5576C",
+            "#43CEA2" to "#185A9D"
+        )
 
         @Volatile
         private var instance: EverlyLocalStore? = null
@@ -219,4 +294,3 @@ class EverlyLocalStore private constructor(context: Context) {
             }
     }
 }
-

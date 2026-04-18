@@ -48,6 +48,18 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_stat_pill"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Planned Moment"
+                android:textColor="@color/everly_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/eventDetailDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,4 +70,3 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
-

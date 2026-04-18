@@ -70,9 +70,18 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="24dp"
-            android:text="No journal entries yet."
+            android:text="No journal entries yet. Start documenting your thoughts."
             android:textColor="@color/everly_text_secondary"
             android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateJournal"
+            style="@style/Widget.Everly.PrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="Add Journal" />
     </LinearLayout>
 </LinearLayout>
-

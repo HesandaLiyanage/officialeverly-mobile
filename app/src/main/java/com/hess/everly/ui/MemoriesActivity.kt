@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
@@ -76,7 +77,7 @@ class MemoriesActivity : AppCompatActivity() {
         } else {
             "No memories match \"$query\"."
         }
-        emptyState.visibility = if (filtered.isEmpty()) TextView.VISIBLE else TextView.GONE
+        emptyState.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
         statsLabel.text = "Total Memories: ${allMemories.size}"
         findViewById<MaterialButton>(R.id.memoriesSortButton).text =
             if (sortDescending) "Date ↓" else "Date ↑"
@@ -86,4 +87,3 @@ class MemoriesActivity : AppCompatActivity() {
         const val EXTRA_MEMORY_ID = "memory_id"
     }
 }
-

@@ -42,8 +42,8 @@
     <style name="Widget.Everly.TabButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:checkable">true</item>
         <item name="strokeColor">@color/everly_border</item>
-        <item name="backgroundTint">@color/everly_surface</item>
-        <item name="android:textColor">@color/everly_text_primary</item>
+        <item name="backgroundTint">@color/selector_tab_tint</item>
+        <item name="android:textColor">@color/selector_tab_text</item>
         <item name="cornerRadius">14dp</item>
     </style>
 </resources>

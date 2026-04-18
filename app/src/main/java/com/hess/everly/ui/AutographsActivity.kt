@@ -2,6 +2,7 @@ package com.hess.everly.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.hess.everly.R
 import com.hess.everly.data.EverlyLocalStore
 import com.hess.everly.data.OfflineAutograph
@@ -42,6 +44,9 @@ class AutographsActivity : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
+        findViewById<MaterialButton>(R.id.btnCreateAutograph).setOnClickListener {
+            startActivity(Intent(this, CreateAutographActivity::class.java))
+        }
         searchInput.doAfterTextChanged { render() }
     }
 
@@ -59,11 +64,10 @@ class AutographsActivity : AppCompatActivity() {
                 it.description.lowercase().contains(query)
         }
         adapter.updateData(filtered)
-        emptyState.visibility = if (filtered.isEmpty()) TextView.VISIBLE else TextView.GONE
+        emptyState.visibility = if (filtered.isEmpty()) View.VISIBLE else View.GONE
     }
 
     companion object {
         const val EXTRA_AUTOGRAPH_ID = "autograph_id"
     }
 }
-

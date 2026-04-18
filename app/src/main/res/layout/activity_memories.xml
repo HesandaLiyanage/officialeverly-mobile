@@ -20,6 +20,13 @@
         android:paddingHorizontal="16dp"
         android:paddingTop="12dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keep your albums and saved moments close."
+            android:textColor="@color/everly_text_secondary"
+            android:textSize="13sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,4 +95,3 @@
             android:text="Add Memory" />
     </LinearLayout>
 </LinearLayout>
-
